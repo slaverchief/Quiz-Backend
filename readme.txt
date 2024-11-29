@@ -35,12 +35,6 @@ json_body:
     "username": "some_user",
     "password": "userpass"
 }
-RESPONSE
-{
-    "id": 1,
-    "username": "admin"
-}
-
 
 Квиз:
 
@@ -80,13 +74,14 @@ json_type
     "res": 100
 }
 
-main/question/ принимает только GET запросы и возвращает список вопросов к конкретному квизу. Ожидает на вход параметр "quiz", в котором будет указан айди квиза. Пример запроса и ответа:
+main/question/ принимает только GET запросы и возвращает список вопросов к конкретному квизу. Ожидает на вход параметр "quiz", в котором будет указан айди квиза. На выходе также ты получаешь ссылку на видео, которое нужно подгрузить. При подгрузке обязательно нужно приписывать в качестве src "media" перед саммой ссылкой, тогда src будет выглядеть следующим образом: src=`media${json['video']}`. Пример запроса и ответа:
 GET REQUEST http://example.com/main/question/2
 RESPONSE:
 [
     {
         "id": 7,
         "content": "Что означает аббревиатура CSS?",
+        "video": "/videos/somevideo.mp4",
         "right_answer": "Cascading Style Sheets",
         "wrong_answer1": "Creative Style Sheets",
         "wrong_answer2": "Computer Style Sheets",
@@ -95,6 +90,7 @@ RESPONSE:
     {
         "id": 8,
         "content": "Как задать цвет фона элемента в CSS?",
+        "video": "/videos/somevideo.mp4",
         "right_answer": "background-color: #FF5733;",
         "wrong_answer1": "color: #FF5733;",
         "wrong_answer2": "border-color: #FF5733;",
@@ -103,6 +99,7 @@ RESPONSE:
     {
         "id": 9,
         "content": "Как изменить шрифт текста в CSS?",
+        "video": "/videos/somevideo.mp4",
         "right_answer": "font-family: Arial;",
         "wrong_answer1": "text-font: Arial;",
         "wrong_answer2": "font-style: Arial;",
@@ -111,6 +108,7 @@ RESPONSE:
     {
         "id": 10,
         "content": "Как изменить размер шрифта в CSS?",
+        "video": "/videos/somevideo.mp4",
         "right_answer": "font-size: 16px;",
         "wrong_answer1": "text-size: 16px;",
         "wrong_answer2": "font-width: 16px;",
@@ -119,6 +117,7 @@ RESPONSE:
     {
         "id": 11,
         "content": "Как выровнять текст по центру с помощью CSS?",
+        "video": "/videos/somevideo.mp4",
         "right_answer": "text-align: center;",
         "wrong_answer1": "text-position: center;",
         "wrong_answer2": "align-text: center;",
@@ -127,6 +126,7 @@ RESPONSE:
     {
         "id": 12,
         "content": "Что делает свойство display: flex;?",
+        "video": "/videos/somevideo.mp4",
         "right_answer": "Применяет флексбокс к контейнеру",
         "wrong_answer1": "Скрывает элемент",
         "wrong_answer2": "Устанавливает фиксированную ширину элемента",
