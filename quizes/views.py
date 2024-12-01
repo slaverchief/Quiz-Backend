@@ -5,7 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
+from QuizAPI.settings import DEBUG
 from QuizAPI.decorators import handle_exceptions
 from QuizAPI.exceptions import HandledException
 from authsys.models import Result
@@ -41,9 +41,12 @@ class QuizApiView(APIView):
         user_result = None
         try:
             user_result = Result.objects.get(user=request.user, quiz=quiz)
+            if not DEBUG and (user_result.try_count >= 2 or user_result.points >= 50):
+                return Response(status=460)
+            user_result.try_count += 1
             user_result.points = points
             user_result.save()
-        except:
+        except ObjectDoesNotExist:
             user_result = Result.objects.create(user=request.user, quiz=quiz, points=points)
         return Response({'res': round(user_result.points)})
 

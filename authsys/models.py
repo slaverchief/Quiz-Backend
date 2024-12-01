@@ -9,6 +9,7 @@ class Result(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='results')
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='results')
     points = models.IntegerField(validators=[MaxValueValidator(100),MinValueValidator(0)])
+    try_count = models.IntegerField(default=0)
 
     class Meta:
         unique_together = ('user', 'quiz',)

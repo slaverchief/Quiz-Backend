@@ -56,7 +56,7 @@ RESPONSE json_type
         "name": "JS"
     }
 ]
-POST запрос записывает результат выполненного квиза. Принимает на вход id квиза и ответы на вопросы квиза в формате {"(id вопроса)": "(ответ)"}. В теле ответа в поле "res" будет хранится количество набранных за квиз баллов. Пример запроса и ответа:
+POST запрос записывает результат выполненного квиза. Принимает на вход id квиза и ответы на вопросы квиза в формате {"(id вопроса)": "(ответ)"}. В теле ответа в поле "res" будет хранится количество набранных за квиз баллов. В случае, если превышено количество попыток пользователя или предыдущая попытка набрала больше или 50 баллов, возвращается пустой HTTP ответ с кодом 460. Пример запроса и ответа:
 POST REQUEST http://example.com/main/quiz
 json_type
 {
@@ -74,63 +74,17 @@ json_type
     "res": 100
 }
 
-main/question/ принимает только GET запросы и возвращает список вопросов к конкретному квизу. Ожидает на вход параметр "quiz", в котором будет указан айди квиза. На выходе также ты получаешь ссылку на видео, которое нужно подгрузить. При подгрузке обязательно нужно приписывать в качестве src "media" перед саммой ссылкой, тогда src будет выглядеть следующим образом: src=`media${json['video']}`. Пример запроса и ответа:
+main/question/ принимает только GET запросы и возвращает список вопросов к конкретному квизу. Ожидает на вход параметр "quiz", в котором будет указан айди квиза. На выходе также ты получаешь ссылку варианты ответа в качестве видео. При подгрузке обязательно нужно приписывать в качестве src адрес бэкенда перед самой ссылкой, тогда src будет выглядеть следующим образом: src=`(адрес сервера с бэком)://${json['video']}`. Пример запроса и ответа:
 GET REQUEST http://example.com/main/question/2
 RESPONSE:
 [
     {
-        "id": 7,
-        "content": "Что означает аббревиатура CSS?",
-        "video": "/videos/somevideo.mp4",
-        "right_answer": "Cascading Style Sheets",
-        "wrong_answer1": "Creative Style Sheets",
-        "wrong_answer2": "Computer Style Sheets",
-        "wrong_answer3": "Colorful Style Sheets"
-    },
-    {
-        "id": 8,
-        "content": "Как задать цвет фона элемента в CSS?",
-        "video": "/videos/somevideo.mp4",
-        "right_answer": "background-color: #FF5733;",
-        "wrong_answer1": "color: #FF5733;",
-        "wrong_answer2": "border-color: #FF5733;",
-        "wrong_answer3": "font-color: #FF5733;"
-    },
-    {
-        "id": 9,
-        "content": "Как изменить шрифт текста в CSS?",
-        "video": "/videos/somevideo.mp4",
-        "right_answer": "font-family: Arial;",
-        "wrong_answer1": "text-font: Arial;",
-        "wrong_answer2": "font-style: Arial;",
-        "wrong_answer3": "font-type: Arial;"
-    },
-    {
-        "id": 10,
-        "content": "Как изменить размер шрифта в CSS?",
-        "video": "/videos/somevideo.mp4",
-        "right_answer": "font-size: 16px;",
-        "wrong_answer1": "text-size: 16px;",
-        "wrong_answer2": "font-width: 16px;",
-        "wrong_answer3": "text-style: 16px;"
-    },
-    {
-        "id": 11,
-        "content": "Как выровнять текст по центру с помощью CSS?",
-        "video": "/videos/somevideo.mp4",
-        "right_answer": "text-align: center;",
-        "wrong_answer1": "text-position: center;",
-        "wrong_answer2": "align-text: center;",
-        "wrong_answer3": "center-text: true;"
-    },
-    {
-        "id": 12,
-        "content": "Что делает свойство display: flex;?",
-        "video": "/videos/somevideo.mp4",
-        "right_answer": "Применяет флексбокс к контейнеру",
-        "wrong_answer1": "Скрывает элемент",
-        "wrong_answer2": "Устанавливает фиксированную ширину элемента",
-        "wrong_answer3": "Задает фоновый цвет для элемента"
+        "id": 19,
+        "content": "Какой жест означает: \"Университет\"?",
+        "right_answer": "/media/videos/university.mp4",
+        "wrong_answer1": "/media/videos/office.mp4",
+        "wrong_answer2": "/media/videos/school.mp4",
+        "wrong_answer3": "/media/videos/college.mp4"
     }
 ]
 
