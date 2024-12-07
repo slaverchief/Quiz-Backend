@@ -36,7 +36,9 @@ class QuizApiView(APIView):
         points = 0
         for q in questions:
             ans = request.data.get(str(q.pk))
-            if ans == q.right_answer:
+            right_answer =  "/media/"+str(q.right_answer)
+            print(ans, right_answer)
+            if ans == right_answer:
                 points += point_step
         user_result = None
         try:
