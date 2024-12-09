@@ -1,4 +1,3 @@
-
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -6,13 +5,13 @@ from QuizAPI.decorators import handle_exceptions
 from .serializers import *
 
 class UserView(APIView):
-    authentication_classes = []
 
     @handle_exceptions
     def get(self, request):
+        if not request.user.is_authenticated:
+            return Response(status=404)
         user = UserSerializer(instance=request.user)
         return Response(user.data)
-
 
     @handle_exceptions
     def post(self, request):
