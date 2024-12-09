@@ -6,11 +6,13 @@ from QuizAPI.decorators import handle_exceptions
 from .serializers import *
 
 class UserView(APIView):
+    authentication_classes = []
 
     @handle_exceptions
     def get(self, request):
         user = UserSerializer(instance=request.user)
         return Response(user.data)
+
 
     @handle_exceptions
     def post(self, request):
