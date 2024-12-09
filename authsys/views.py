@@ -1,11 +1,8 @@
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
+from rest_framework_simplejwt.tokens import RefreshToken
 from QuizAPI.decorators import handle_exceptions
-from QuizAPI.exceptions import HandledException
-from QuizAPI.permissions import *
 from .serializers import *
 
 class UserView(APIView):
@@ -19,6 +16,8 @@ class UserView(APIView):
     def post(self, request):
         user = UserSerializer(data=request.data)
         user.is_valid(raise_exception=True)
-        user.save()
-        return Response(status=200)
+        user_obj = user.save()
+        token_data = RefreshToken.for_user(user_obj)
+        refresh, access = str(token_data), str(token_data.access_token)
+        return Response(status=200, data={"refresh": refresh, "access": access})
 
